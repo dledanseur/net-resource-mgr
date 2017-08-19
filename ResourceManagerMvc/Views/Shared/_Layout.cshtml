@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NetUserMgt</title>
+
+    <environment names="Development">
+		<link rel="stylesheet" href="~/lib/material-design-icons-iconfont/dist/material-design-icons.css" />
+        <link rel="stylesheet" href="~/lib/materialize/dist/css/materialize.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              asp-fallback-href="~/lib/material-design-icons-iconfont/dist/material-design-icons.css"
+              asp-fallback-test-class="material-icons" asp-fallback-test-property="font-family" asp-fallback-test-value="Material Icons" />
+			
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.css"
+              asp-fallback-href="~/lib/materialize/dist/css/materialize.min.css"
+              asp-fallback-test-class="materialize-red" asp-fallback-test-property="materialize-red" asp-fallback-test-value="#e51c23 !important"/>
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"
+                asp-fallback-src="~/lib/materialize/dist/js/materialize.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha256-3mqgTUhHNgfXgjrzjPOaW03DdQ9hgW92BApzLREoRoA=">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="Moq" Version="4.7.99" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.csproj" />
+    <ProjectReference Include="..\UserServices\UserServices.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserServices\" />
+    <Folder Include="UserServices\Services\" />
+    <Folder Include="UserServices\Services\Gitlab\" />
+  </ItemGroup>
+</Project>

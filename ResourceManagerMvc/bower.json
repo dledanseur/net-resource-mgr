@@ -1,0 +1,9 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "jquery": "3.2.1",
+    "materialize": "0.100.1",
+    "material-design-icons-iconfont": "^3.0.3"
+  }
+}
