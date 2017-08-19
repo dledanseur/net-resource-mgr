@@ -9,10 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using UserServices.Services;
+using Services.Authentication;
+using Services.Authentication. Gitlab;
 using NetUserMgtMvc.Shared;
 using Tools.Configuration;
-using UserServices.Services.Gitlab;
 
 namespace NetUserMgt
 {

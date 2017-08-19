@@ -3,8 +3,10 @@ using Moq;
 using Tools.Configuration;
 using Tools.HttpHandler;
 using Tools.Random;
+using Services.Authentication;
+using Services.Authentication.Gitlab;
 
-namespace UserServices.Services.Gitlab
+namespace Services.Tests.Authentication.Gitlab
 {
     public class GitlabAuthenticationServiceTest
     {

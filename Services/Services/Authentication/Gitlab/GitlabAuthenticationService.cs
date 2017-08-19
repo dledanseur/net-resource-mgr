@@ -5,7 +5,7 @@ using Tools.Random;
 using Tools.Random.Impl;
 using System.Web;
                 
-namespace UserServices.Services.Gitlab
+namespace Services.Authentication.Gitlab
 {
     public class GitlabAuthenticationService: IAuthenticationService
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using Tools;
-namespace UserServices.Services
+namespace Services.Authentication
 {
     /// <summary>
     /// This class contains information used to perform an authentication.

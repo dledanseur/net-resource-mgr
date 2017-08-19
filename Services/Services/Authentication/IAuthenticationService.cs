@@ -1,5 +1,5 @@
 ﻿using System;
-namespace UserServices.Services
+namespace Services.Authentication
 {
     public interface IAuthenticationService
     {

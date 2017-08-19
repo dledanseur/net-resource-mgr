@@ -17,8 +17,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetUserMgt\NetUserMgtMvc.csproj" />
-    <ProjectReference Include="..\UserServices\UserServices.csproj" />
     <ProjectReference Include="..\Tools\Tools.csproj" />
+    <ProjectReference Include="..\ResourceManagerMvc\ResourceManagerMvc.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 </Project>

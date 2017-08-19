@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using UserServices.Services;
+using Services.Authentication;
 using Tools.Configuration;
 using Microsoft.AspNetCore.Http;
 

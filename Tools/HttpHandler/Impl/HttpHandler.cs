@@ -8,12 +8,12 @@ namespace Tools.HttpHandler.Impl
     {
         private HttpClient client = new HttpClient();
 
-        public Task Get(string uri)
+        public Task<HttpResponseMessage> Get(string uri)
         {
             return client.GetAsync(uri);
         }
 
-        public Task Post(string uri, HttpContent content)
+        public Task<HttpResponseMessage> Post(string uri, HttpContent content)
         {
             return client.PostAsync(uri, content);
         }

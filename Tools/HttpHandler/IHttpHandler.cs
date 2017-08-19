@@ -6,7 +6,7 @@ namespace Tools.HttpHandler
 {
     public interface IHttpHandler
     {
-        Task Get(string uri);
-        Task Post(String uri, HttpContent content);
+        Task<HttpResponseMessage> Get(string uri);
+        Task<HttpResponseMessage> Post(String uri, HttpContent content);
     }
 }

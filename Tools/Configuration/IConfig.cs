@@ -1,10 +1,12 @@
 ﻿using System;
 namespace Tools.Configuration
 {
-    public class IConfig
-    {
-        public IConfig()
-        {
-        }
-    }
+	public interface IConfig
+	{
+		string ConnectionString { get; }
+
+        string GetConnectionString(String id);
+
+        string GetStringParam(String id);
+	}
 }

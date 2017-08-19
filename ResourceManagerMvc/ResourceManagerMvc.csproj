@@ -16,8 +16,8 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\UserServices\UserServices.csproj" />
     <ProjectReference Include="..\Tools\Tools.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\images\" />

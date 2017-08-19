@@ -1,7 +1,8 @@
 ﻿using System;
 namespace Tools.Random
 {
-    public interface IRandom
+    public interface IRawRandom
     {
+        byte[] GetBytes(int length); 
     }
 }
