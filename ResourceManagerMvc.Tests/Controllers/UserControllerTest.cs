@@ -7,6 +7,7 @@ using Tools.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
+
 namespace NetUserMgtMvc.Tests
 {
     public class UserControllerTest
@@ -14,30 +15,38 @@ namespace NetUserMgtMvc.Tests
         private UserController _userController;
         private Mock<IAuthenticationService> _authenticationServiceMock;
         private Mock<IConfig> _configMock;
+        private Mock<IResponseCookies> responseCookies;
 
         public UserControllerTest() {
 
             this._authenticationServiceMock = new Mock<IAuthenticationService>();
             this._configMock = new Mock<IConfig>();
             this._userController = new UserController(_authenticationServiceMock.Object, _configMock.Object);
+			_userController.ControllerContext = new ControllerContext();
+
+
+            responseCookies = new Mock<IResponseCookies>();
+            Mock<HttpResponse> httpResponseMock = new Mock<HttpResponse>();
+			Mock<HttpContext> httpContextMock = new Mock<HttpContext>();
+
+            httpResponseMock.Setup(r => r.Cookies).Returns(responseCookies.Object);
+            httpContextMock.Setup(c => c.Response).Returns(httpResponseMock.Object);
+
+            _userController.ControllerContext.HttpContext = httpContextMock.Object;
 
         }
 
         [Fact]
         public void TestLogin()
         {
-            // given
 
-            AuthenticationSession expectedAuthenticationSession = new AuthenticationSession("http://gitlab.example.com/oauth/authorize", "1324");
+            AuthenticationSession expectedAuthenticationSession = new AuthenticationSession("http://gitlab.example.com/oauth/authorize", "1234");
 
             _configMock.Setup(c => c.GetStringParam(UserController.APPLICATION_BASE_URL)).Returns("http://my.app.com");
             _authenticationServiceMock.Setup(a => a.InitiateSession(It.IsAny<String>())).Returns(expectedAuthenticationSession);
-            Mock<HttpResponse> responseReceiver = new Mock<HttpResponse>();
-            Mock<IResponseCookies> responseCookies = new Mock<IResponseCookies>();
-            responseReceiver.Setup(r => r.Cookies).Returns(responseCookies.Object);
 
             // when
-            IActionResult returnAction = _userController.Login(responseReceiver.Object);
+            IActionResult returnAction = _userController.Login();
 
             // then
             Assert.IsType<RedirectResult>(returnAction);
@@ -48,11 +57,10 @@ namespace NetUserMgtMvc.Tests
 
             _authenticationServiceMock.Verify(a => a.InitiateSession("http://my.app.com/user/verify"));
 
-            CookieOptions expectedCookieOptions = new CookieOptions();
-            expectedCookieOptions.HttpOnly = true;
-            expectedCookieOptions.Secure = true;
-
-            responseCookies.Verify(c => c.Append("x-state","1234",expectedCookieOptions));
+            responseCookies.Verify(c => c.Append("x-state","1234",
+                    It.Is<CookieOptions>(opt => opt.HttpOnly == true && opt.Secure == true)
+            ));
         }
     }
 }
+// given

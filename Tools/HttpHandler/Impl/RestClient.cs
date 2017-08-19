@@ -10,13 +10,13 @@ using System.Linq;
 
 namespace Tools.HttpHandler.Impl
 {
-    public class RestClientImpl : IRestClient
+    public class RestClient : IRestClient
     {
         private IHttpHandler _httpHandler;
 
-        public RestClientImpl() : this(new Impl.HttpHandler()) {}
+        public RestClient() : this(new Impl.HttpHandler()) {}
 
-        public RestClientImpl(IHttpHandler handler) {
+        public RestClient(IHttpHandler handler) {
             this._httpHandler = handler;
         }
 

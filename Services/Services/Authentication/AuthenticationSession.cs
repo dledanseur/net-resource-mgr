@@ -12,8 +12,16 @@ namespace Services.Authentication
     public class AuthenticationSession
     {
         public AuthenticationSession() {}
-        public AuthenticationSession(string redirect_uri, string state) {
-            
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:Services.Authentication.AuthenticationSession"/> class.
+        ///
+        /// </summary>
+        /// <param name="login_uri">URI to which redirect the user so that he can authenticate</param>
+        /// <param name="state">Random string used as a CSRF mechanism, to be stored in a secured cookie for instance</param>
+        public AuthenticationSession(string login_uri, string state) {
+            this.LoginURI = login_uri;
+            this.State = state;
         }
 
         /// <summary>

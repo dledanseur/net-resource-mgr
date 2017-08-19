@@ -20,13 +20,19 @@ namespace NetUserMgtMvc.Controllers
             this._config = config;
         }
 
-        public IActionResult Login(HttpResponse response) {
+        public IActionResult Login() {
 
             string baseurl = _config.GetStringParam(APPLICATION_BASE_URL);
 
             string finalRedirectUrl = baseurl + "/user/verify";
 
             AuthenticationSession res = this._authenticationService.InitiateSession(finalRedirectUrl);
+
+            CookieOptions options = new CookieOptions();
+            options.HttpOnly = true;
+            options.Secure = true;
+
+            HttpContext.Response.Cookies.Append("x-state",res.State, options);
 
             return new RedirectResult(res.LoginURI);
 

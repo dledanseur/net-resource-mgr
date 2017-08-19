@@ -13,6 +13,8 @@ using Services.Authentication;
 using Services.Authentication. Gitlab;
 using NetUserMgtMvc.Shared;
 using Tools.Configuration;
+using Tools.HttpHandler;
+using Tools.HttpHandler.Impl;
 
 namespace NetUserMgt
 {
@@ -36,9 +38,10 @@ namespace NetUserMgt
             // Add framework services.
             services.AddMvc();
 
+            services.AddSingleton<IRestClient, RestClient>();
             services.AddSingleton<IAuthenticationService, GitlabAuthenticationService>();
 
-            services.AddSingleton<IConfig, Config>();
+            services.AddSingleton<IConfig>(new Config("RM_"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
