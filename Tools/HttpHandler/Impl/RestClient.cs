@@ -29,7 +29,7 @@ namespace Tools.HttpHandler.Impl
 
 			String stringContent = await response.Content.ReadAsStringAsync();
 
-            return BuildResponse<T>(JsonConvert.DeserializeObject<T>(stringContent), response.Headers);
+            return await BuildResponse<T>(response);
         }
 
 
@@ -41,13 +41,17 @@ namespace Tools.HttpHandler.Impl
 
             HttpResponseMessage response = await _httpHandler.Post(path, new StringContent(jsonContent, Encoding.UTF8, "application/json"));
 
-			String stringContent = await response.Content.ReadAsStringAsync();
-
-            return BuildResponse<T>(JsonConvert.DeserializeObject<T>(stringContent), response.Headers);
+            return await BuildResponse<T>(response);
 
         }
 
-        private RestResponse<T> BuildResponse<T>(T content, HttpHeaders headers) {
+        private async Task<RestResponse<T>> BuildResponse<T>(HttpResponseMessage response) {
+            String stringContent = await response.Content.ReadAsStringAsync();
+
+            T content = JsonConvert.DeserializeObject<T>(stringContent);
+
+            HttpHeaders headers = response.Headers;
+
             Dictionary<string, string[]> headersDic = new Dictionary<string, string[]>();
 
             foreach (var kv in headers) {
@@ -59,7 +63,9 @@ namespace Tools.HttpHandler.Impl
                 headersDic.Add(header,values);
 
             }
-            return new RestResponse<T>(content, headersDic);    
+
+
+            return new RestResponse<T>(response.IsSuccessStatusCode, content, headersDic);    
         }
 
 		private string BuildUrl(string path, IDictionary<string, string> queryParams)

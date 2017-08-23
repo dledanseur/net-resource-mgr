@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
+using System.Net;
 
 namespace Tools.HttpHandler.Tests
 {
@@ -14,10 +15,10 @@ namespace Tools.HttpHandler.Tests
     {
 
         Mock<IHttpHandler> _httpHandlerMock = new Mock<IHttpHandler>();
-        private RestClientImpl _restClient;
+        private RestClient _restClient;
 
         public RestClientImplTest() {
-            _restClient = new RestClientImpl(_httpHandlerMock.Object);
+            _restClient = new RestClient(_httpHandlerMock.Object);
         }
 
         [Fact]
@@ -33,7 +34,8 @@ namespace Tools.HttpHandler.Tests
 
 			// then
 			Dictionary<string, string> expectedResult = DictionaryWithKeysAndValues("key", "value");
-			
+
+			Assert.True(result.Success);
             Assert.Equal(expectedResult, result.Body);
             Assert.NotNull(result.Headers);
             Assert.Equal(1, result.Headers.Count);
@@ -85,8 +87,8 @@ namespace Tools.HttpHandler.Tests
 
             // then
             Dictionary<string, string> expectedResult = DictionaryWithKeysAndValues("keyRes", "valRes");
-			
 
+			Assert.True(result.Success);
             Assert.Equal(expectedResult, result.Body);
             Assert.Equal("/test/api", calledUrl);
 			Assert.NotNull(result.Headers);
@@ -94,6 +96,27 @@ namespace Tools.HttpHandler.Tests
 			Assert.Equal("testheader_value", result.Headers["testheader"][0]);
             Assert.Equal("{\"key\":\"value\"}", resultingContent.ReadAsStringAsync().Result);
 
+
+		}
+
+        [Theory]
+        [InlineData(HttpStatusCode.BadRequest)]
+        [InlineData(HttpStatusCode.InternalServerError)]
+        [InlineData(HttpStatusCode.BadGateway)]
+        [InlineData(HttpStatusCode.Forbidden)]
+		public async Task TestResponseWithErrorResponse(HttpStatusCode errorCode) 
+        {
+            //given
+            HttpResponseMessage msg = JsonMessageWithContent("{'keyRes': 'valRes'}");
+            msg.StatusCode = errorCode;
+            _httpHandlerMock.Setup(r => r.Post(It.IsAny<String>(), It.IsAny<HttpContent>()))
+                            .Returns(Task.FromResult(msg));
+
+			// when
+			RestResponse<Dictionary<string, string>> result = await _restClient.Post<Dictionary<string, string>>("/test/api", "content");
+
+            // then
+            Assert.False(result.Success);
 
 		}
 

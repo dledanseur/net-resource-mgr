@@ -39,7 +39,7 @@ namespace NetUserMgtMvc.Tests
         [Fact]
         public void TestLogin()
         {
-
+            // given
             AuthenticationSession expectedAuthenticationSession = new AuthenticationSession("http://gitlab.example.com/oauth/authorize", "1234");
 
             _configMock.Setup(c => c.GetStringParam(UserController.APPLICATION_BASE_URL)).Returns("http://my.app.com");
@@ -60,6 +60,11 @@ namespace NetUserMgtMvc.Tests
             responseCookies.Verify(c => c.Append("x-state","1234",
                     It.Is<CookieOptions>(opt => opt.HttpOnly == true && opt.Secure == true)
             ));
+        }
+
+        [Fact]
+        public void TestVerify() {
+            // given 
         }
     }
 }

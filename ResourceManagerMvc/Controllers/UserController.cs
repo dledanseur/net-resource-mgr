@@ -39,10 +39,11 @@ namespace NetUserMgtMvc.Controllers
         }
 
         public IActionResult Authenticate() {
-            string userName = this._authenticationService.VerifyLogin();
+            /*string userName = this._authenticationService.VerifyLogin();
 
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");*/
+            return null;
 
         }
 

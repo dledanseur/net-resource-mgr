@@ -1,4 +1,6 @@
 ﻿using System;
+using Services.Services.Authentication;
+using System.Collections.Generic;
 namespace Services.Authentication
 {
     public interface IAuthenticationService
@@ -13,6 +15,6 @@ namespace Services.Authentication
         /// <returns>The authentication session.</returns>
         AuthenticationSession InitiateSession(string redirectURI);
 
-        string VerifyLogin();
+        AuthenticationSuccess VerifyLogin(string state, IDictionary<string,string> args);
     }
 }
