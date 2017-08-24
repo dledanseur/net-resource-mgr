@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using UserServices.Data.Entities;
+using Services.Data.Entities;
 namespace Services.Data
 {
     public class EFDBContext: DbContext

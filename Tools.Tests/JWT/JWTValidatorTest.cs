@@ -44,9 +44,6 @@ namespace Tools.Tests.JWT
 			}
 
             this._private_key = BCUtils.ToRSAParameters((RsaPrivateCrtKeyParameters)keyPair.Private);
-
-
-
         }
 
         [Fact]

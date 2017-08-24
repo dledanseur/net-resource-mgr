@@ -1,5 +1,5 @@
 ﻿using System;
-using UserServices.Data.Entities;
+using Services.Data.Entities;
 using System.Threading.Tasks;
 
 namespace Services.Data

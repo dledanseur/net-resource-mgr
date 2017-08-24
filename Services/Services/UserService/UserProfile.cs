@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Services.Services.User
+namespace Services.Services.UserService
 {
     public class UserProfile
     {

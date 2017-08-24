@@ -12,11 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Services\" />
     <Folder Include="Data\Entities\" />
     <Folder Include="Services\Authentication\" />
     <Folder Include="Services\Authentication\Gitlab\" />
-    <Folder Include="Services\User\" />
+    <Folder Include="Services\UserService\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.csproj" />

@@ -57,7 +57,7 @@ namespace Services.Tests.Authentication.Gitlab
             AuthenticationSession expectedSession = new AuthenticationSession(
                 "http://gitlab.example.com/oauth/authorize" +
                     "?client_id=1234" +
-                    "&redirect_uri=http%3A%2F%2Fredirect.to" +
+                    "&redirect_uri=http%3a%2f%2fredirect.to" +
                     "&response_type=code" +
                     "&state=5678" +
                     "&nonce=ABCD",
