@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UserServices\**" />
+    <EmbeddedResource Remove="UserServices\**" />
+    <None Remove="UserServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
@@ -14,10 +20,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UserServices\" />
-    <Folder Include="UserServices\Services\" />
-    <Folder Include="UserServices\Services\Gitlab\" />
   </ItemGroup>
 </Project>

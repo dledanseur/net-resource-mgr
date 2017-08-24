@@ -26,7 +26,7 @@ namespace NetUserMgt
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables("RM_");
             Configuration = builder.Build();
         }
 
@@ -38,8 +38,10 @@ namespace NetUserMgt
             // Add framework services.
             services.AddMvc();
 
+            
             services.AddSingleton<IRestClient, RestClient>();
             services.AddSingleton<IAuthenticationService, GitlabAuthenticationService>();
+            Authentication.ConfigureServices(services, Configuration);
 
             services.AddSingleton<IConfig>(new Config("RM_"));
         }
@@ -61,8 +63,8 @@ namespace NetUserMgt
             }
 
             app.UseStaticFiles();
-
-            Authentication.SharedInstance.Configure(app);
+            app.UseAuthentication();
+            //Authentication.SharedInstance.Configure(app, Configuration);
            
 	        app.UseMvc(routes =>
 	        {

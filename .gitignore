@@ -38,3 +38,6 @@ Thumbs.db
 
 # dotCover
 *.dotCover
+/ResourceManagerMvc/Properties/launchSettings.json
+/ResourceManagerMvc/wwwroot/lib
+/.vs

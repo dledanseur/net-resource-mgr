@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services.Authentication;
 using Tools.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NetUserMgtMvc.Controllers
 {
@@ -38,12 +39,13 @@ namespace NetUserMgtMvc.Controllers
 
         }
 
+        [Authorize]
         public IActionResult Authenticate() {
-            /*string userName = this._authenticationService.VerifyLogin();
+            /*string userName = this._authenticationService.VerifyLogin();*/
 
 
-            return RedirectToAction("Index", "Home");*/
-            return null;
+            return new RedirectToActionResult("Index", "Home",null);
+           
 
         }
 
