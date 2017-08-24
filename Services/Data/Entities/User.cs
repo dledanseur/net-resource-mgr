@@ -1,5 +1,5 @@
 ﻿using System;
-namespace UserServices.Data.Entities
+namespace Services.Data.Entities
 {
     public class User
     {

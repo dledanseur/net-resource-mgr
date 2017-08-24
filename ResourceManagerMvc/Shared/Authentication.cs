@@ -51,6 +51,7 @@ namespace NetUserMgtMvc.Shared
                 o.ResponseType = "code";
                 o.Scope.Clear();
                 o.Scope.Add("openid");
+               
                     
                 /*o.Events = new Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents()
                 {

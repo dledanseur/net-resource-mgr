@@ -40,7 +40,7 @@ namespace NetUserMgtMvc.Tests
         public void TestLogin()
         {
             // given
-            AuthenticationSession expectedAuthenticationSession = new AuthenticationSession("http://gitlab.example.com/oauth/authorize", "1234");
+            AuthenticationSession expectedAuthenticationSession = new AuthenticationSession("http://gitlab.example.com/oauth/authorize", "1234", "");
 
             _configMock.Setup(c => c.GetStringParam(UserController.APPLICATION_BASE_URL)).Returns("http://my.app.com");
             _authenticationServiceMock.Setup(a => a.InitiateSession(It.IsAny<String>())).Returns(expectedAuthenticationSession);

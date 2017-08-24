@@ -16,6 +16,7 @@
     <Folder Include="Data\Entities\" />
     <Folder Include="Services\Authentication\" />
     <Folder Include="Services\Authentication\Gitlab\" />
+    <Folder Include="Services\User\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.csproj" />
