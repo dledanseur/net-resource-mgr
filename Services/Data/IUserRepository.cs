@@ -7,7 +7,7 @@ namespace Services.Data
     {
         Task<User> FindUserByExternalId(string externalId);
 
-		void SaverUser(User user);
+		Task SaverUser(User user);
 
 	}
 }

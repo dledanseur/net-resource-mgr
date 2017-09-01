@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Services.Services.UserService;
+using System.Threading.Tasks;
 
 namespace NetUserMgtMvc.Shared
 {
@@ -17,19 +19,32 @@ namespace NetUserMgtMvc.Shared
 		
         private static Authentication instance;
 
-        private string AccessToken { get; set; }
-
-        public static Authentication SharedInstance { 
-            get {
-                if (instance == null) {
-                    instance = new Authentication();
-                }
-
+        public static Authentication SharedInstance
+        {
+            get
+            {
                 return instance;
             }
-        }
+        }    
 
-        private Authentication() {}
+        private IUserService _user_service;
+
+        private string AccessToken { get; set; }
+
+
+        
+
+        public Authentication(IUserService userService)
+        {
+            if (instance != null)
+            {
+                throw new Exception("Authentication object already constructed");
+            }
+
+            instance = this;
+            this._user_service = userService;
+
+        }
 
         public void Configure(IApplicationBuilder app) {
             app.UseAuthentication();
@@ -51,29 +66,46 @@ namespace NetUserMgtMvc.Shared
                 o.ResponseType = "code";
                 o.Scope.Clear();
                 o.Scope.Add("openid");
-               
-                    
-                /*o.Events = new Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents()
+                o.GetClaimsFromUserInfoEndpoint = true;
+
+                o.Events = new Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents()
                 {
-                    OnAuthorizationCodeReceived = context => {
-                        context.Token = context.Request.Query["access_token"];
+
+                    OnUserInformationReceived = async context => 
+                    {
+                        foreach (Claim c in context.Principal.Claims) {
+                            await CreateOrUpdateProfile(c);
+                        }
+
+                        return;
                     }
-                }*/
+                    /*,
+
+                    OnAuthorizationCodeReceived = context =>
+                    {
+                        //context.Token = context.Request.Query["access_token"];
+                    }*/
+
+
+                };
+
+                
 
             });
             
         }
-        public async void SignIn (HttpContext context, string username) {
-			ClaimsIdentity objClaim = new ClaimsIdentity("Bearer");
-            objClaim.AddClaim(new Claim(ClaimTypes.Name, username));
 
-            ClaimsPrincipal principal = new ClaimsPrincipal(objClaim);
+        public static async Task CreateOrUpdateProfile(Claim c)
+        {
+            UserProfile profile = new UserProfile();
+            profile.ExternalId = c.Subject.Name;
+            profile.Email = c.Properties["email"];
+            profile.UserName = c.Properties["nickname"];
+            profile.FullName = c.Properties["name"];
 
-            await context.Authentication.SignInAsync(AUTHENTICATION_SCHEME, principal);
+            await Authentication.SharedInstance._user_service.CreateOrUpdateUserProfile(profile);
+
         }
 
-        public async void SignOut (HttpContext context) {
-            await context.Authentication.SignOutAsync(AUTHENTICATION_SCHEME);
-        }
     }
 }

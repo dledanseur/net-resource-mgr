@@ -27,29 +27,76 @@ namespace Services.Tests.Services.UserServiceTests
                                 .Returns(Task.FromResult<User>(null));
 
 
-            UserProfile prof = new UserProfile();
-            prof.ExternalId = "123";
-            prof.Email = "a@a.com";
-            prof.FullName = "John Doe";
-            prof.UserName = "jdoe";
+            UserProfile prof = JohnDoeUserProfile();
 
             // when
             await _user_service.CreateOrUpdateUserProfile(prof);
 
             // then
-            User expectedEntity = new User();
-            expectedEntity.FullName = "John Doe";
-            expectedEntity.ExternalId = "123";
-            expectedEntity.Email = "a@a.com";
-            expectedEntity.UserName = "jdoe";
+            User expectedEntity = JohnDoeEntity();
 
             _user_repository_mock.Verify(r => r.FindUserByExternalId("123"));
             _user_repository_mock.Verify(r => r.SaverUser(expectedEntity));
 
+        }
 
+        [Fact]
+        public async Task TestUpdateProfile()
+        {
+            // given
+            User janeDoeEntity = JaneDoeEntity();
+            janeDoeEntity.ExternalId = "123";
+
+            _user_repository_mock.Setup(r => r.FindUserByExternalId(It.IsAny<string>()))
+                                .Returns(Task.FromResult(JaneDoeEntity()));
+
+
+            UserProfile prof = JohnDoeUserProfile();
+
+            // when
+            await _user_service.CreateOrUpdateUserProfile(prof);
+
+            // then
+            User expectedEntity = JohnDoeEntity();
+
+            _user_repository_mock.Verify(r => r.FindUserByExternalId("123"));
+            _user_repository_mock.Verify(r => r.SaverUser(expectedEntity));
 
         }
 
+
+        private UserProfile JohnDoeUserProfile()
+        {
+            UserProfile prof = new UserProfile();
+            prof.ExternalId = "123";
+            prof.Email = "a@a.com";
+            prof.FullName = "John Doe";
+            prof.UserName = "john.doe";
+
+            return prof;
+        }
+
+        private User JaneDoeEntity()
+        {
+            User expectedEntity = new User();
+            expectedEntity.FullName = "Jane Doe";
+            expectedEntity.ExternalId = "456";
+            expectedEntity.Email = "b@b.com";
+            expectedEntity.UserName = "jane.doe";
+
+            return expectedEntity;
+        }
+
+        private User JohnDoeEntity()
+        {
+            User expectedEntity = new User();
+            expectedEntity.FullName = "John Doe";
+            expectedEntity.ExternalId = "123";
+            expectedEntity.Email = "a@a.com";
+            expectedEntity.UserName = "john.doe";
+
+            return expectedEntity;
+        }
 
 
     }
