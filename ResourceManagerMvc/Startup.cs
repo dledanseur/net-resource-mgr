@@ -15,6 +15,9 @@ using NetUserMgtMvc.Shared;
 using Tools.Configuration;
 using Tools.HttpHandler;
 using Tools.HttpHandler.Impl;
+using Services.Data;
+using Services.Services.UserService;
+using Microsoft.EntityFrameworkCore;
 
 namespace NetUserMgt
 {
@@ -38,9 +41,17 @@ namespace NetUserMgt
             // Add framework services.
             services.AddMvc();
 
-            
+            services.AddScoped<DbContext, EFDBContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IAuthenticationService, GitlabAuthenticationService>();
+
             services.AddSingleton<IRestClient, RestClient>();
-            services.AddSingleton<IAuthenticationService, GitlabAuthenticationService>();
+            
+            services.AddSingleton<Authentication>();
+
+            
             Authentication.ConfigureServices(services, Configuration);
 
             services.AddSingleton<IConfig>(new Config("RM_"));

@@ -1,0 +1,17 @@
+﻿version: "2"
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: resource_mgr
+        MYSQL_USER: resource_mgr
+        MYSQL_PASSWORD: resource_mgr
+    ports:
+        - 53306:3306
+    volumes:
+        - db_data:/var/lib/mysql
+
+volumes:
+    db_data:

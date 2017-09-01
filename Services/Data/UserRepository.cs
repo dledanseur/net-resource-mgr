@@ -1,23 +1,33 @@
 ﻿using System;
 using Services.Data.Entities;
 using System.Threading.Tasks;
+using System.Linq;
+
 
 namespace Services.Data
 {
     public class UserRepository: IUserRepository
     {
-        public UserRepository()
+        private EFDBContext _context;
+
+        public UserRepository(EFDBContext context)
         {
+            this._context = context;
         }
 
-        public Task<User> FindUserByExternalId(string externalId)
+        public async Task<User> FindUserByExternalId(string externalId)
         {
-            throw new NotImplementedException();
+            
+            var query = from product in _context.Users
+                        where product.ExternalId == externalId
+                        select product;
+
+            return await query.ToAsyncEnumerable().FirstOrDefault(null);
         }
 
-        public void SaverUser(User user)
+        public async Task SaverUser(User user)
         {
-            throw new NotImplementedException();
+            await _context.SaveChangesAsync();
         }
     }
 }
